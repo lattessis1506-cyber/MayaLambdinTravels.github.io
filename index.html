@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maya's Travels — Through a Third Culture Lens</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --warm-black: #1a1610;
+    --muted-gold: #c9a96e;
+    --rust: #b85c38;
+    --sage: #7a8c6e;
+    --slate: #4a5568;
+    --pale: #faf8f3;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--warm-black);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* ——— HERO ——— */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 0;
+    position: relative;
+    background: var(--warm-black);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(201,169,110,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 20% 70%, rgba(184,92,56,0.08) 0%, transparent 50%);
+  }
+
+  .hero-grain {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 80px 8vw;
+    z-index: 1;
+    position: relative;
+  }
+
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    color: var(--muted-gold);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(48px, 8vw, 100px);
+    font-weight: 400;
+    color: var(--cream);
+    line-height: 1.0;
+    max-width: 800px;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--muted-gold);
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 300;
+    color: rgba(245,240,232,0.65);
+    margin-top: 28px;
+    max-width: 500px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.7s forwards;
+  }
+
+  .hero-scroll {
+    padding: 24px 8vw 40px;
+    z-index: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: rgba(245,240,232,0.4);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.2s forwards;
+  }
+
+  .hero-scroll::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--muted-gold);
+    opacity: 0.5;
+  }
+
+  /* ——— NAV ——— */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 8vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    mix-blend-mode: normal;
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted-gold);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.5);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--muted-gold); }
+
+  /* ——— ABOUT ——— */
+  .about {
+    padding: 120px 8vw;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .about-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--muted-gold);
+    text-transform: uppercase;
+    padding-top: 8px;
+  }
+
+  .about-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 28px;
+  }
+
+  .about-text p {
+    font-size: clamp(16px, 1.5vw, 19px);
+    line-height: 1.9;
+    color: var(--slate);
+    margin-bottom: 20px;
+    font-weight: 300;
+  }
+
+  .camera-note {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+    padding: 10px 18px;
+    border: 1px solid rgba(201,169,110,0.3);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted-gold);
+    text-transform: uppercase;
+  }
+
+  /* ——— TRIP SECTIONS ——— */
+  .trip-section {
+    padding: 100px 0;
+    border-top: 1px solid rgba(26,22,16,0.08);
+  }
+
+  .trip-header {
+    padding: 0 8vw 60px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 48px;
+    align-items: end;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .trip-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 80px;
+    font-weight: 300;
+    color: rgba(26,22,16,0.06);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .trip-meta {}
+
+  .trip-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted-gold);
+    margin-bottom: 12px;
+  }
+
+  .trip-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 52px);
+    font-weight: 400;
+    line-height: 1.15;
+  }
+
+  .trip-title em { font-style: italic; color: var(--rust); }
+
+  .trip-story {
+    padding: 0 8vw;
+    max-width: 1200px;
+    margin: 0 auto 56px;
+  }
+
+  .trip-story p {
+    font-size: clamp(16px, 1.5vw, 20px);
+    line-height: 1.9;
+    color: var(--slate);
+    font-weight: 300;
+    max-width: 700px;
+    margin-bottom: 18px;
+  }
+
+  /* ——— PHOTO GRIDS ——— */
+  .photo-grid-east-coast {
+    padding: 0 8vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-rows: auto auto;
+    gap: 16px;
+  }
+
+  .photo-grid-east-coast .photo-item:nth-child(1) {
+    grid-row: 1 / 3;
+  }
+
+  .photo-grid-japan {
+    padding: 0 8vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+
+  .photo-grid-shenandoah {
+    padding: 0 8vw;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .photo-grid-el-salvador {
+    padding: 0 8vw;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 16px;
+  }
+
+  .photo-grid-el-salvador .photo-item:nth-child(1) {
+    grid-column: 1 / 3;
+  }
+
+  .photo-item {
+    position: relative;
+    overflow: hidden;
+    background: var(--warm-black);
+  }
+
+  .photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(0.85) contrast(1.05);
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.5s ease;
+  }
+
+  .photo-item:hover img {
+    transform: scale(1.04);
+    filter: saturate(1) contrast(1.02);
+  }
+
+  .photo-item .photo-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 48px 20px 20px;
+    background: linear-gradient(transparent, rgba(26,22,16,0.75));
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transform: translateY(4px);
+    opacity: 0;
+    transition: all 0.4s ease;
+  }
+
+  .photo-item:hover .photo-caption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tall { height: 520px; }
+  .medium { height: 250px; }
+  .wide { height: 420px; }
+  .sq { height: 340px; }
+  .short { height: 280px; }
+  .full-wide { height: 480px; }
+
+  /* ——— PULL QUOTE ——— */
+  .pull-quote {
+    padding: 80px 8vw;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .pull-quote blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 3vw, 36px);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--warm-black);
+  }
+
+  .pull-quote cite {
+    display: block;
+    margin-top: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted-gold);
+    font-style: normal;
+  }
+
+  /* ——— DIVIDER ——— */
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--muted-gold);
+    margin: 0 8vw 60px;
+    opacity: 0.4;
+  }
+
+  /* ——— FOOTER ——— */
+  footer {
+    background: var(--warm-black);
+    color: rgba(245,240,232,0.4);
+    padding: 60px 8vw 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  footer .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--cream);
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+
+  footer p {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+  }
+
+  /* ——— ANIMATIONS ——— */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 768px) {
+    .about { grid-template-columns: 1fr; gap: 32px; }
+    .trip-header { grid-template-columns: 1fr; gap: 8px; }
+    .trip-number { font-size: 48px; }
+    .photo-grid-east-coast, .photo-grid-japan { grid-template-columns: 1fr; }
+    .photo-grid-east-coast .photo-item:nth-child(1) { grid-row: auto; }
+    .photo-grid-el-salvador { grid-template-columns: 1fr; }
+    .photo-grid-el-salvador .photo-item:nth-child(1) { grid-column: auto; }
+    .tall, .medium, .wide, .sq, .short, .full-wide { height: 300px; }
+    nav .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">Maya's Travels</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#east-coast">East Coast</a></li>
+    <li><a href="#tokyo">Tokyo</a></li>
+    <li><a href="#shenandoah">Shenandoah</a></li>
+    <li><a href="#countryside">Japan</a></li>
+    <li><a href="#el-salvador">El Salvador</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grain"></div>
+  <div class="hero-content">
+    <p class="eyebrow">A Travel Portfolio</p>
+    <h1 class="hero-title">Maya's Travels<br>Through a <em>Third Culture</em><br>Lens</h1>
+    <p class="hero-sub">Shot on a Sony Cybershot, inherited from my mother. Every frame a small act of remembering where I come from — and figuring out where I belong.</p>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-label reveal">About Maya</div>
+  <div class="about-text">
+    <h2 class="reveal">Half Japanese. Half American.<br>Fully in between.</h2>
+    <p class="reveal">I grew up as an embassy kid — one of those children who collects countries the way others collect stamps. Asia was home in ways I'm still learning to articulate, and the U.S. was a concept before it became a place I actually lived. Now I study at the University of Virginia, double majoring in Computer Science and Global Studies, trying to reconcile the two halves of a self that was always already split across continents.</p>
+    <p class="reveal">These photographs are my attempt to see clearly — not as a tourist, not quite as a local, but through what sociologists call a "third culture lens." A perspective that belongs fully to neither world and so is free to notice both. Every place I visit, I am always simultaneously inside and outside of it, and that tension is where the most interesting pictures live.</p>
+    <p class="reveal">All images were shot on my mother's Sony Cybershot. There is something right about that — using her camera to document my own becoming.</p>
+    <div class="camera-note reveal">📷 Sony Cybershot — my mother's</div>
+  </div>
+</section>
+
+<!-- EAST COAST TRIP -->
+<section class="trip-section" id="east-coast">
+  <div class="trip-header">
+    <div class="trip-number">01</div>
+    <div class="trip-meta reveal">
+      <div class="trip-tag">Summer Road Trip · Boston · Acadia · Niagara</div>
+      <h2 class="trip-title">The East Coast,<br><em>Bigger Than Expected</em></h2>
+    </div>
+  </div>
+
+  <div class="trip-story">
+    <p class="reveal">I drove to Boston with my best friend. Just the two of us and an open road — and when we finally got there, I pointed my camera up at the Paramount Theatre sign and tried to capture the feeling of a city that simply would not stop. Boston felt enormous to me. The neon, the noise, the scale of it pressed against a blue sky that seemed too small to contain it all. That photograph is less about a theatre and more about that specific feeling of arriving somewhere and realizing the world is bigger than you'd planned for.</p>
+    <p class="reveal">Then came Acadia National Park — my favorite stop of the whole trip. We woke up at 4 AM and drove to Cadillac Mountain because we'd read it was the first place in the continental US to catch sunlight. We climbed in the dark, half asleep, talking about all the light we were about to see. What we got was fog. A thick, grey, beautiful fog that swallowed everything and gave nothing back. No sunrise. No blazing light on the Atlantic. Just a twilight abyss and the sound of waves somewhere below us.</p>
+    <p class="reveal">I've thought about that morning a lot since. Beauty doesn't always arrive the way you invited it. Sometimes it shows up in the form of a foggy beach and a dead tree on the sand and a silence so total you can hear yourself breathing. That foggy cove is one of the best photographs I've ever taken.</p>
+    <p class="reveal">We made it up at Niagara Falls — where we shared a rack of lamb ribs that cost more than anything I'd ever ordered in my life. Worth every cent. The falls were overwhelming in the best way possible. Mist everywhere. Tourist boats in red ponchos. The river churning turquoise. The kind of thing you can't fully believe even when you're standing in front of it.</p>
+  </div>
+
+  <div class="photo-grid-east-coast">
+    <div class="photo-item tall reveal">
+      <img src="DSC06876.JPG" alt="Paramount Theatre, Boston" loading="lazy">
+      <div class="photo-caption">Boston — the city felt impossibly big</div>
+    </div>
+    <div class="photo-item medium reveal">
+      <img src="DSC06909.JPG" alt="Acadia National Park foggy beach" loading="lazy">
+      <div class="photo-caption">Acadia — 4 AM. No sunrise. Perfect.</div>
+    </div>
+    <div class="photo-item medium reveal">
+      <img src="DSC06941.JPG" alt="Niagara Falls" loading="lazy">
+      <div class="photo-caption">Niagara — worth every dollar of those lamb ribs</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <blockquote class="reveal">"Beauty doesn't always arrive the way you invited it — sometimes it's a fog so thick you can hear yourself breathing."</blockquote>
+    <cite class="reveal">Acadia National Park, Maine</cite>
+  </div>
+</section>
+
+<!-- TOKYO -->
+<section class="trip-section" id="tokyo">
+  <div class="trip-header">
+    <div class="trip-number">02</div>
+    <div class="trip-meta reveal">
+      <div class="trip-tag">Tokyo, Japan · Where I'm From</div>
+      <h2 class="trip-title">Tokyo: The City That<br><em>Never Finishes Teaching Me</em></h2>
+    </div>
+  </div>
+
+  <div class="trip-story">
+    <p class="reveal">I am half Japanese and half American, and Tokyo is the city I measure all other cities against. It is the place I know best and understand least. That is not a contradiction — it's a condition of the third culture experience. No matter how many times I return, no matter how fluent my Japanese gets, there is always another layer I haven't reached yet, another alley I've never turned down, another counter restaurant where the regulars know something I don't.</p>
+    <p class="reveal">This photograph is a Tokyo ramen shop — the kind of place that exists in thousands of variations across the city, always small, always warm, always anchored by the hiss of a kitchen and the quiet ritual of strangers eating alone together. The calligraphy on the walls reads 辛つけめん (spicy dipping noodles) and ハイボール (highball). The man with his back to me is in his own world entirely. That's Tokyo. You can be completely alone in a room full of people, and somehow it doesn't feel lonely at all.</p>
+    <p class="reveal">I don't know if Tokyo is home or the closest thing I have to one. But I know I keep going back, and I keep finding things I haven't seen before. That's enough.</p>
+  </div>
+
+  <div class="photo-grid-shenandoah">
+    <div class="photo-item full-wide reveal">
+      <img src="DSC06996.JPG" alt="Tokyo ramen shop counter" loading="lazy" style="object-position: center;">
+      <div class="photo-caption">Tokyo — a ramen counter, a man eating alone, a kitchen alive with sound</div>
+    </div>
+  </div>
+</section>
+
+<!-- SHENANDOAH -->
+<section class="trip-section" id="shenandoah">
+  <div class="trip-header">
+    <div class="trip-number">03</div>
+    <div class="trip-meta reveal">
+      <div class="trip-tag">Shenandoah National Park · Cedar Run Trail</div>
+      <h2 class="trip-title">Five Strangers,<br><em>A Waterfall, and a Risk</em></h2>
+    </div>
+  </div>
+
+  <div class="trip-story">
+    <p class="reveal">I signed up for a UVA Outdoors Club hike without knowing a single person who was going. I showed up to find five strangers — all men — who took me in without question and led me up the Cedar Run Trail in Shenandoah in the middle of autumn. It was the kind of risk that sounds small but isn't: showing up alone somewhere new and trusting that it will be okay.</p>
+    <p class="reveal">It was more than okay. The trail follows a creek all the way up through forests that in October go gold and rust and deep red. The falls cascade over huge granite slabs in layers, and when we reached the base and I stood there with water sound filling every corner of the air, I felt something settle. The leaves were everywhere. The cold was real. The strangers had become, for that day, something like friends.</p>
+    <p class="reveal">I take risks like this because the alternative — staying in what's comfortable — has never once shown me a waterfall.</p>
+  </div>
+
+  <div class="photo-grid-shenandoah">
+    <div class="photo-item full-wide reveal">
+      <img src="DSC07056.JPG" alt="Cedar Run waterfall, Shenandoah" loading="lazy" style="object-position: center bottom;">
+      <div class="photo-caption">Cedar Run Trail, Shenandoah — autumn gold and granite</div>
+    </div>
+  </div>
+</section>
+
+<!-- JAPANESE COUNTRYSIDE -->
+<section class="trip-section" id="countryside">
+  <div class="trip-header">
+    <div class="trip-number">04</div>
+    <div class="trip-meta reveal">
+      <div class="trip-tag">Rural Japan · Grandmother's Country</div>
+      <h2 class="trip-title">The Countryside,<br><em>Where My Grandmother Lives</em></h2>
+    </div>
+  </div>
+
+  <div class="trip-story">
+    <p class="reveal">My Japanese grandmother does not live in Tokyo. She lives in the kind of place these photographs try to describe: mountain roads where trucks trundle past at unhurried speeds, rivers that wind through reed beds toward the sea, afternoons that go golden and stay that way longer than seems possible. Exploring the countryside with her is one of the ways we bridge the gap between us — between her Japan and my Japan, between her world and the blur of countries I was raised across.</p>
+    <p class="reveal">We don't always share the same language perfectly. But we share the landscape. We share the specific quality of light on a river bend. We share standing on a pedestrian bridge together, watching the sun flatten against mountains, and not needing to say anything about it. These photographs are of that world — unhurried, deep-rooted, and more mine than anywhere I've ever been.</p>
+  </div>
+
+  <div class="photo-grid-japan">
+    <div class="photo-item sq reveal">
+      <img src="DSC07202.JPG" alt="Japanese countryside road and mountains" loading="lazy">
+      <div class="photo-caption">From a bridge — sun catching the mountains</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07205.JPG" alt="Japanese river and countryside" loading="lazy">
+      <div class="photo-caption">River bend — grandmother's Japan</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07247.JPG" alt="Japanese coastal sunset" loading="lazy">
+      <div class="photo-caption">The Pacific coast at dusk</div>
+    </div>
+  </div>
+</section>
+
+<!-- EL SALVADOR -->
+<section class="trip-section" id="el-salvador">
+  <div class="trip-header">
+    <div class="trip-number">05</div>
+    <div class="trip-meta reveal">
+      <div class="trip-tag">El Salvador · Spring Break · Pacific Coast & San Salvador</div>
+      <h2 class="trip-title">El Salvador, and<br><em>Learning to Fall Off a Board</em></h2>
+    </div>
+  </div>
+
+  <div class="trip-story">
+    <p class="reveal">Spring break. El Salvador. Two best friends and a plan to surf. The Pacific coast there has a particular relationship with the sun — it seems to conspire with the water to produce light that has no parallel anywhere else I've been. These sunset photographs are two moments from the same evening, the same rock formation in silhouette, the same stretch of shoreline with its scattered stones. One shows the sun blazing gold, high and full. The other catches it slipping behind the rocks, the sky going all pink and mauve, a lone figure balanced on the formation as if at the edge of everything.</p>
+    <p class="reveal">On my third time surfing ever, I had a coach. I felt good — genuinely competent, reading the waves, paddling at the right moments, standing up more than I fell. The ocean seemed manageable. Friendly, even. I was very wrong about that.</p>
+    <p class="reveal">The next day, no coach. Just me and the Pacific and a board that had opinions of its own. I got completely obliterated. Waves broke directly on my head. I wiped out in every possible configuration. At one point I wasn't sure which direction was up. I looked, without question, ridiculous.</p>
+    <p class="reveal">I paddled back out and tried again anyway. That's the thing about travel, and about me — I am always willing to look foolish in a new place. It's the only way I know how to actually be somewhere.</p>
+    <p class="reveal">We also spent time in San Salvador — the cathedral, the public square where pigeons outnumber everyone, the colonial church with its intricate Gothic facade so detailed it looked like lace. A city that surprised me with its warmth and its monuments and its absolute refusal to be summarized.</p>
+  </div>
+
+  <div class="photo-grid-el-salvador">
+    <div class="photo-item short reveal" style="height: 360px;">
+      <img src="DSC07250.JPG" alt="El Salvador Pacific sunset" loading="lazy" style="object-position: center 30%;">
+      <div class="photo-caption">El Salvador — the sun and the Pacific, conspiring</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07263.JPG" alt="El Salvador sunset silhouette" loading="lazy">
+      <div class="photo-caption">Sunset — the sun blazing, the figure standing at the edge</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07265.JPG" alt="El Salvador sunset fading" loading="lazy">
+      <div class="photo-caption">The last light — all pink and mauve</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07266.JPG" alt="San Salvador plaza and cathedral" loading="lazy">
+      <div class="photo-caption">San Salvador — the plaza, the pigeons, the cathedral dome</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07270.JPG" alt="El Salvador equestrian statue" loading="lazy">
+      <div class="photo-caption">Plaza Libertad — Gerardo Barrios on horseback</div>
+    </div>
+    <div class="photo-item sq reveal">
+      <img src="DSC07270.JPG" alt="El Salvador Gothic church facade" loading="lazy">
+      <div class="photo-caption">The Cathedral of San Salvador</div>
+    </div>
+  </div>
+
+  <div class="pull-quote">
+    <blockquote class="reveal">"I am always willing to look foolish in a new place. It's the only way I know how to actually be somewhere."</blockquote>
+    <cite class="reveal">Pacific Coast, El Salvador — third surfing lesson (no coach)</cite>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-title">Maya's Travels</div>
+    <p>Through a Third Culture Lens</p>
+    <p style="margin-top:8px;">University of Virginia · CS & Global Studies</p>
+  </div>
+  <div style="text-align:right;">
+    <p>All photographs © Maya</p>
+    <p style="margin-top:6px;">Shot on a Sony Cybershot</p>
+    <p style="margin-top:6px; color: rgba(201,169,110,0.6);">Boston · Acadia · Niagara · Tokyo · Shenandoah · Rural Japan · El Salvador</p>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Stagger siblings
+  document.querySelectorAll('.photo-grid-east-coast .photo-item, .photo-grid-japan .photo-item, .photo-grid-el-salvador .photo-item').forEach((el, i) => {
+    el.style.transitionDelay = (i * 80) + 'ms';
+  });
+</script>
+</body>
+</html>
