@@ -1,6 +1,3 @@
-Here you go:
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +8,7 @@ Here you go:
 <style>
   :root {
     --cream: #f5f0e8;
-    --warm-black: #1a1610;
+    --warm-black: #1a1610
     --muted-gold: #c9a96e;
     --rust: #b85c38;
     --sage: #7a8c6e;
@@ -30,6 +27,7 @@ Here you go:
     cursor: crosshair;
   }
 
+  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -59,6 +57,7 @@ Here you go:
   }
   .nav-links a:hover { color: var(--muted-gold); }
 
+  /* HERO */
   .hero {
     min-height: 100vh;
     display: grid;
@@ -119,6 +118,7 @@ Here you go:
     background: var(--muted-gold); opacity: 0.5;
   }
 
+  /* ABOUT */
   .about {
     padding: 120px 8vw;
     display: grid; grid-template-columns: 1fr 1.8fr;
@@ -147,8 +147,12 @@ Here you go:
     letter-spacing: 0.15em; color: var(--muted-gold); text-transform: uppercase;
   }
 
+  /* TRIP SECTIONS */
   .trip-section { padding: 100px 0; border-top: 1px solid rgba(26,22,16,0.08); }
-  .trip-header { padding: 0 8vw 60px; max-width: 1200px; margin: 0 auto; }
+  .trip-header {
+    padding: 0 8vw 60px;
+    max-width: 1200px; margin: 0 auto;
+  }
   .trip-tag {
     font-family: 'DM Mono', monospace; font-size: 10px;
     letter-spacing: 0.25em; text-transform: uppercase;
@@ -165,7 +169,11 @@ Here you go:
     color: var(--slate); font-weight: 300; max-width: 700px; margin-bottom: 18px;
   }
 
-  .photo-item { position: relative; overflow: hidden; background: var(--warm-black); }
+  /* PHOTO ITEM BASE */
+  .photo-item {
+    position: relative; overflow: hidden;
+    background: var(--warm-black);
+  }
   .photo-item img {
     width: 100%; height: auto; object-fit: unset; display: block;
     filter: saturate(0.85) contrast(1.05);
@@ -183,6 +191,10 @@ Here you go:
   }
   .photo-item:hover .photo-caption { opacity: 1; transform: translateY(0); }
 
+  /* EAST COAST GRID */
+  /* Row 1: Boston tall left + NYC stacked right */
+  /* Row 2: 3 Acadia photos spanning full width */
+  /* Row 3: Niagara full */
   .ec-grid {
     padding: 0 8vw; max-width: 1200px; margin: 0 auto;
     display: grid;
@@ -190,16 +202,25 @@ Here you go:
     grid-template-rows: auto auto auto;
     gap: 14px;
   }
-  .ec-boston { grid-column: 1; grid-row: 1; }
-  .ec-nyc { grid-column: 2; grid-row: 1; }
+  .ec-boston {
+    grid-column: 1; grid-row: 1;
+  }
+  .ec-nyc {
+    grid-column: 2; grid-row: 1;
+  }
   .ec-acadia-row {
     grid-column: 1 / 3; grid-row: 2;
     display: grid;
     grid-template-columns: 0.85fr 1.3fr 0.85fr;
     gap: 14px;
   }
-  .ec-niagara { grid-column: 1 / 3; grid-row: 3; }
+  .ec-acadia-row .photo-item { }
+  .ec-acadia-row .photo-item:nth-child(2) { }
+  .ec-niagara {
+    grid-column: 1 / 3; grid-row: 3;
+  }
 
+  /* TOKYO */
   .tokyo-grid {
     padding: 0 8vw; max-width: 1200px; margin: 0 auto;
     display: grid;
@@ -207,8 +228,21 @@ Here you go:
     gap: 14px;
   }
   .tokyo-ramen { grid-column: 1; }
-  .tokyo-right { grid-column: 2; display: grid; grid-template-rows: 1fr 1fr; gap: 14px; }
+  .tokyo-right {
+    grid-column: 2;
+    display: grid; grid-template-rows: 1fr 1fr; gap: 14px;
+  }
+  .tokyo-right .photo-item { }
 
+  /* SHENANDOAH */
+  .shen-grid {
+    padding: 0 8vw; max-width: 1200px; margin: 0 auto;
+  }
+  .shen-grid .photo-item { }
+
+  /* COUNTRYSIDE GRID */
+  /* Row 1: Fuji wide landscape + river portrait */
+  /* Row 2: garden portrait + coast landscape wide */
   .jp-grid {
     padding: 0 8vw; max-width: 1200px; margin: 0 auto;
     display: grid;
@@ -216,10 +250,18 @@ Here you go:
     grid-template-rows: auto auto;
     gap: 14px;
   }
-  .jp-fuji { grid-column: 1; grid-row: 1; }
-  .jp-river { grid-column: 2; grid-row: 1 / 3; }
-  .jp-garden { grid-column: 1; grid-row: 2; }
+  .jp-fuji {
+    grid-column: 1; grid-row: 1;
+  }
+  .jp-river {
+    grid-column: 2; grid-row: 1 / 3;
+  }
+  .jp-garden {
+    grid-column: 1; grid-row: 2;
+  }
 
+  /* EL SALVADOR GRID */
+  /* Story order: cafe (wide horizontal) â sunset (tall portrait) â cathedral plaza (wide) â gothic church (tall portrait) â volcano ridge (wide) â crater (portrait) */
   .els-grid {
     padding: 0 8vw; max-width: 1200px; margin: 0 auto;
     display: grid;
@@ -227,12 +269,28 @@ Here you go:
     grid-template-rows: auto auto auto;
     gap: 14px;
   }
-  .els-cafe { grid-column: 1 / 3; grid-row: 1; }
-  .els-sunset { grid-column: 1; grid-row: 2; }
-  .els-church { grid-column: 2; grid-row: 2; }
-  .els-cathedral { grid-column: 1; grid-row: 3; }
-  .els-volcano { grid-column: 2; grid-row: 3; }
+  /* Cafe: wide horizontal, spans full width */
+  .els-cafe {
+    grid-column: 1 / 3; grid-row: 1;
+  }
+  /* Sunset: tall portrait, left */
+  .els-sunset {
+    grid-column: 1; grid-row: 2;
+  }
+  /* Gothic church: tall portrait, right */
+  .els-church {
+    grid-column: 2; grid-row: 2;
+  }
+  /* Cathedral plaza: wide, left */
+  .els-cathedral {
+    grid-column: 1; grid-row: 3;
+  }
+  /* Volcano ridge: wide landscape */
+  .els-volcano {
+    grid-column: 2; grid-row: 3;
+  }
 
+  /* PULL QUOTE */
   .pull-quote {
     padding: 80px 8vw; max-width: 1000px;
     margin: 0 auto; text-align: center;
@@ -249,6 +307,7 @@ Here you go:
     color: var(--muted-gold); font-style: normal;
   }
 
+  /* FOOTER */
   footer {
     background: var(--warm-black);
     color: #1a1610;
@@ -262,6 +321,7 @@ Here you go:
   }
   footer p { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; }
 
+  /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
@@ -274,12 +334,14 @@ Here you go:
 
   @media (max-width: 768px) {
     .about { grid-template-columns: 1fr; gap: 32px; }
+    .trip-header { grid-template-columns: 1fr; gap: 8px; }
+    .trip-number { font-size: 48px; }
     nav .nav-links { display: none; }
     .ec-grid, .tokyo-grid, .jp-grid, .els-grid { grid-template-columns: 1fr; }
     .ec-boston, .ec-nyc, .ec-niagara, .ec-acadia-row,
     .tokyo-ramen, .tokyo-right,
-    .jp-fuji, .jp-river, .jp-garden,
-    .els-cafe, .els-sunset, .els-church, .els-cathedral, .els-volcano
+    .jp-fuji, .jp-river, .jp-garden, .jp-turtle, .jp-coast,
+    .els-cafe, .els-sunset1, .els-church, .els-volcano, .els-crater
     { grid-column: auto; grid-row: auto; }
     .ec-acadia-row { grid-template-columns: 1fr; }
   }
@@ -298,6 +360,7 @@ Here you go:
   </ul>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grain"></div>
@@ -309,6 +372,7 @@ Here you go:
   <div class="hero-scroll">Scroll to explore</div>
 </section>
 
+<!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-label reveal">About Maya</div>
   <div class="about-text">
@@ -316,14 +380,16 @@ Here you go:
     <p class="reveal">I grew up as an embassy kid, one of those children who collects countries the way others collect stamps. Asia was home in ways I am still learning to articulate, and the U.S. was a concept before it became a place I actually lived. Now I study at the University of Virginia, double majoring in Computer Science and Global Studies, trying to reconcile the two halves of a self that was always already split across continents.</p>
     <p class="reveal">These photographs are my attempt to see clearly, not as a tourist, not quite as a local, but through what sociologists call a third culture lens. A perspective that belongs fully to neither world and so is free to notice both. Every place I visit, I am simultaneously inside and outside of it, and that tension is where the most interesting pictures live.</p>
     <p class="reveal">All images were shot on my mother's Sony Cybershot. There is something right about that, using her camera to document my own becoming.</p>
-    <div class="camera-note reveal">📷 Sony Cybershot — my mother's</div>
+    <div class="camera-note reveal">ð· Sony Cybershot â my mother's</div>
   </div>
 </section>
 
+<!-- EAST COAST TRIP -->
 <section class="trip-section" id="east-coast">
   <div class="trip-header">
+
     <div class="trip-meta reveal">
-      <div class="trip-tag">Road Trip · Boston · New York City · Acadia · Niagara</div>
+      <div class="trip-tag">Road Trip Â· Boston Â· New York City Â· Acadia Â· Niagara</div>
       <h2 class="trip-title">The East Coast,<br><em>Bigger Than Expected</em></h2>
     </div>
   </div>
@@ -338,31 +404,36 @@ Here you go:
   </div>
 
   <div class="ec-grid">
+    <!-- Row 1: Boston + NYC -->
     <div class="photo-item ec-boston reveal">
       <img src="DSC06876 2.JPG" alt="Paramount Theatre, Boston" loading="lazy">
-      <div class="photo-caption">Boston — the city felt impossibly big</div>
+      <div class="photo-caption">Boston â the city felt impossibly big</div>
     </div>
     <div class="photo-item ec-nyc reveal">
       <img src="IMG_2316.JPG" alt="DUMBO Brooklyn, Manhattan Bridge" loading="lazy" style="object-position: center 30%;">
-      <div class="photo-caption">DUMBO, Brooklyn — everyone taking the same photo</div>
+      <div class="photo-caption">DUMBO, Brooklyn â everyone taking the same photo</div>
     </div>
+
+    <!-- Row 2: Acadia trio -->
     <div class="ec-acadia-row reveal">
       <div class="photo-item">
         <img src="DSC06906.JPG" alt="Acadia seaweed shoreline" loading="lazy">
-        <div class="photo-caption">Acadia — low tide, no sunrise</div>
+        <div class="photo-caption">Acadia â low tide, no sunrise</div>
       </div>
       <div class="photo-item">
         <img src="DSC06915.JPG" alt="Cadillac Mountain fog" loading="lazy" style="object-position: center 60%;">
-        <div class="photo-caption">Cadillac Mountain — 4 AM. Fog. Perfect.</div>
+        <div class="photo-caption">Cadillac Mountain â 4 AM. Fog. Perfect.</div>
       </div>
       <div class="photo-item">
         <img src="DSC06908.JPG" alt="Acadia lone boulder" loading="lazy">
-        <div class="photo-caption">Acadia — a boulder and a seagull and the grey Atlantic</div>
+        <div class="photo-caption">Acadia â a boulder and a seagull and the grey Atlantic</div>
       </div>
     </div>
+
+    <!-- Row 3: Niagara -->
     <div class="photo-item ec-niagara reveal">
       <img src="DSC06941 2.JPG" alt="Niagara Falls" loading="lazy" style="object-position: center 40%;">
-      <div class="photo-caption">Niagara Falls — worth every dollar of those lamb ribs</div>
+      <div class="photo-caption">Niagara Falls â worth every dollar of those lamb ribs</div>
     </div>
   </div>
 
@@ -372,10 +443,12 @@ Here you go:
   </div>
 </section>
 
+<!-- TOKYO -->
 <section class="trip-section" id="tokyo">
   <div class="trip-header">
+
     <div class="trip-meta reveal">
-      <div class="trip-tag">Tokyo, Japan — Where I'm From</div>
+      <div class="trip-tag">Tokyo, Japan Where I'm From</div>
       <h2 class="trip-title">Tokyo: The City That<br><em>Never Finishes Teaching Me</em></h2>
     </div>
   </div>
@@ -389,10 +462,10 @@ Here you go:
   <div class="tokyo-grid">
     <div class="photo-item tokyo-ramen reveal">
       <img src="DSC06996 2.JPG" alt="Tokyo ramen shop counter" loading="lazy">
-      <div class="photo-caption">Shimokitazawa — a ramen counter, a man alone, a kitchen alive with sound</div>
+      <div class="photo-caption">Shimokitazawa â a ramen counter, a man alone, a kitchen alive with sound</div>
     </div>
     <div class="tokyo-right reveal">
-      <div class="photo-item">
+            <div class="photo-item">
         <img src="DSC07200.JPG" alt="Turtles on mossy rock Tokyo pond" loading="lazy">
         <div class="photo-caption">Two turtles, a rock, and a shared afternoon</div>
       </div>
@@ -400,8 +473,10 @@ Here you go:
   </div>
 </section>
 
+<!-- JAPANESE COUNTRYSIDE -->
 <section class="trip-section" id="countryside">
   <div class="trip-header">
+
     <div class="trip-meta reveal">
       <div class="trip-tag">Rural Japan · Grandmother's Country</div>
       <h2 class="trip-title">The Countryside,<br><em>Where My Grandmother Lives</em></h2>
@@ -429,8 +504,10 @@ Here you go:
   </div>
 </section>
 
+<!-- EL SALVADOR -->
 <section class="trip-section" id="el-salvador">
   <div class="trip-header">
+
     <div class="trip-meta reveal">
       <div class="trip-tag">El Salvador · Spring Break · Pacific Coast and San Salvador</div>
       <h2 class="trip-title">El Salvador, and<br><em>Learning to Fall Off a Board</em></h2>
@@ -448,22 +525,27 @@ Here you go:
   </div>
 
   <div class="els-grid">
+    <!-- Cafe: story opens here, wide horizontal -->
     <div class="photo-item els-cafe reveal">
       <img src="DSC07234.JPG" alt="El Salvador surf town cafe street view" loading="lazy" style="object-position: center 40%;">
-      <div class="photo-caption">El Tunco — a surfer, two dogs, a police officer, and an afternoon</div>
+      <div class="photo-caption">El Tunco â a surfer, two dogs, a police officer, and an afternoon</div>
     </div>
+    <!-- Sunset: the ocean section, tall portrait left -->
     <div class="photo-item els-sunset reveal">
       <img src="DSC07263 2.JPG" alt="El Salvador Pacific sunset" loading="lazy">
       <div class="photo-caption">The Pacific, doing what it does best</div>
     </div>
+    <!-- Gothic church: tall portrait right -->
     <div class="photo-item els-church reveal">
       <img src="DSC07271.JPG" alt="El Salvador Gothic church facade" loading="lazy">
-      <div class="photo-caption">Gothic church, San Salvador — beauty I didn't need to understand</div>
+      <div class="photo-caption">Gothic church, San Salvador â beauty I didn't need to understand</div>
     </div>
+    <!-- Cathedral plaza: wide landscape -->
     <div class="photo-item els-cathedral reveal">
       <img src="DSC07270 2.jpg" alt="San Salvador cathedral plaza" loading="lazy" style="object-position: center 40%;">
       <div class="photo-caption">Cathedral plaza, San Salvador</div>
     </div>
+    <!-- Volcano ridge: wide landscape -->
     <div class="photo-item els-volcano reveal">
       <img src="DSC07273.JPG" alt="Volcan Izalco El Salvador" loading="lazy" style="object-position: center 40%;">
       <div class="photo-caption">Volcan Izalco from the ridge</div>
@@ -476,16 +558,17 @@ Here you go:
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
   <div>
     <div class="footer-title">Maya's Travels</div>
     <p>Through a Third Culture Lens</p>
-    <p style="margin-top:8px;">University of Virginia · CS &amp; Global Studies</p>
+    <p style="margin-top:8px;">University of Virginia Â· CS &amp; Global Studies</p>
   </div>
   <div style="text-align:right;">
     <p>All photographs &copy; Maya Lambdin</p>
     <p style="margin-top:6px;">Shot on a Sony Cybershot</p>
-    <p style="margin-top:6px; color: rgba(201,169,110,0.6);">Boston · NYC · Acadia · Niagara · Tokyo · Rural Japan · El Salvador</p>
+    <p style="margin-top:6px; color: rgba(201,169,110,0.6);">Boston Â· NYC Â· Acadia Â· Niagara Â· Tokyo Â· Rural Japan Â· El Salvador</p>
   </div>
 </footer>
 
@@ -503,4 +586,3 @@ Here you go:
 </script>
 </body>
 </html>
-```
